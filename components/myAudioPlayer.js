@@ -4,9 +4,11 @@ export class MyAudioPlayer extends HTMLElement {
       super();
       this.attachShadow({ mode: 'open' });
       this.shadowRoot.innerHTML = `
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <audio id="player" controls="controls">
+        <link rel="stylesheet" type="text/css" href="css/myAudioPlayer.css">
+
+        <audio id="player" controls="controls" preload="metadata">
         </audio>
+
 
         <div id="playerBtnContainer">
           <svg class="buttonsDiv" id="rewindBtn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
@@ -28,10 +30,6 @@ export class MyAudioPlayer extends HTMLElement {
           <svg class="buttonDiv" id="nextTrackBtn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8Zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5Z"/>
           </svg>
-        </div>
-        
-        <div id="volumeContainer"> 
-          <input type="range" id="volumeRange" min="0" max="1" step="0.1" value="1">
         </div>
       `;
       this.playlist = [];
@@ -59,7 +57,6 @@ export class MyAudioPlayer extends HTMLElement {
       this.pauseBtn = this.shadowRoot.querySelector('#pauseBtn');
       this.rewindBtn = this.shadowRoot.querySelector('#rewindBtn');
       this.forwardBtn = this.shadowRoot.querySelector('#forwardBtn');
-      this.volumeRange = this.shadowRoot.querySelector('#volumeRange');
       this.progressBar = this.shadowRoot.querySelector('#progressBar');
       this.nextTrackBtn = this.shadowRoot.querySelector('#nextTrackBtn');
       
@@ -67,7 +64,6 @@ export class MyAudioPlayer extends HTMLElement {
       this.pauseBtn.addEventListener('click', () => this.pause());
       this.rewindBtn.addEventListener('click', () => this.rewind());
       this.forwardBtn.addEventListener('click', () => this.forward());
-      this.volumeRange.addEventListener('input', () => this.adjustVolume());
       this.player.addEventListener('timeupdate', () => this.updateProgressBar());
       this.nextTrackBtn.addEventListener('click', () => this.nextTrack());
     }
@@ -97,11 +93,31 @@ export class MyAudioPlayer extends HTMLElement {
   
     play() {
       this.player.play();
+      this.updatePlayPauseButtonStyle(true); // true pour lecture en cours
     }
   
     pause() {
       this.player.pause();
+      this.updatePlayPauseButtonStyle(false); // true pour lecture en cours
+
     }
+
+    updatePlayPauseButtonStyle(isPlaying) {
+      const playBtn = this.shadowRoot.querySelector('#playBtn');
+      const pauseBtn = this.shadowRoot.querySelector('#pauseBtn');
+
+      if (isPlaying) {
+          playBtn.style.backgroundColor = '#1DB954'; 
+          playBtn.style.fill = "black";
+          pauseBtn.style.backgroundColor = 'black'; 
+          pauseBtn.style.fill = "#1DB954";
+      } else {
+          pauseBtn.style.backgroundColor = '#1DB954'; 
+          pauseBtn.style.fill = "black";
+          playBtn.style.backgroundColor = 'black'; 
+          playBtn.style.fill = "#1DB954";
+      }
+  }
   
     rewind() {
       this.player.currentTime -= 5;
@@ -109,10 +125,6 @@ export class MyAudioPlayer extends HTMLElement {
   
     forward() {
       this.player.currentTime += 5;
-    }
-  
-    adjustVolume() {
-      this.player.volume = this.volumeRange.value;
     }
   
     updateProgressBar() {

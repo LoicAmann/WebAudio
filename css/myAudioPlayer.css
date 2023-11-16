@@ -1,0 +1,84 @@
+#player {
+  width: 50%;
+}
+
+#playerBtnContainer {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1%;
+}
+
+.buttonsDiv {
+  border-radius: 50%; /* Ajout de la bordure arrondie */
+  fill: #1DB954; /* Couleur verte de Spotify */
+  background-color: black;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.buttonsDiv:hover {
+  transform: scale(1.2);
+}
+
+#playBtn,
+#pauseBtn {
+  width: 10%;
+  height: 10%;
+}
+
+
+#rewindBtn,
+#forwardBtn,
+#nextTrackBtn {
+  width: 8%;
+  height: 8%;
+}
+
+audio {
+  width: 100%;
+  background-color: #121212; /* Couleur de fond du lecteur Spotify en mode sombre */
+  padding: 1%;
+  border-radius: 10px;
+}
+
+audio::-webkit-media-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style des boutons */
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button,
+audio::-webkit-media-controls-mute-container{
+  background-color: #1DB954; /* Couleur verte de Spotify */
+  border-radius: 50%;
+  padding: 10px;
+  margin: 0 5px;
+}
+
+audio::-webkit-media-controls-timeline {
+  flex-grow: 1;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  color: #000000;
+}
+
+audio::-webkit-media-controls-current-time-display::before,
+audio::-webkit-media-controls-time-remaining-display::before {
+  content: '-';
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+  display: none;
+}
+
+audio::-webkit-media-controls-mute-button{
+  background-color: #1DB954;
+  border-radius: 50%;
+}
