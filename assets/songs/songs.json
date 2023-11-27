@@ -1,0 +1,11 @@
+{
+    "songs": [
+      { "file": "CleanGuitarRiff.mp3", "name": "Clean Guitar Riff" },
+      { "file": "happy-rock.mp3", "name": "Happy Rock" },
+      { "file": "inside-you.mp3", "name": "Inside You" },
+      { "file": "sunshine-whistle.mp3", "name": "Sunshine Whistle" },
+      { "file": "the-best-jazz.mp3", "name": "The Best Jazz" },
+      { "file": "titanium.mp3", "name": "Titanium" }
+    ]
+  }
+  
