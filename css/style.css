@@ -1,4 +1,10 @@
-/* Add the following CSS styles to your stylesheet */
+body {
+  background-color: black;
+}/* Add the following CSS styles to your stylesheet */
+
+h1 {
+  color: whitesmoke;
+}
 
 .playlist-container {
     background-color: #181818;

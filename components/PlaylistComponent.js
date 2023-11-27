@@ -3,7 +3,8 @@ export class PlaylistComponent extends HTMLElement {
 
         super(); 
         this.songs = []; 
-        this.audio = new Audio(); 
+        this.audio = "assets/songs/CleanGuitarRiff.mp3"; 
+        console.log("Current audio : " + this.audio);
 
         this.playlistContainer = document.createElement('div'); 
     this.playlistContainer.classList.add('playlist-container');
@@ -22,6 +23,7 @@ export class PlaylistComponent extends HTMLElement {
         })
         .catch(error => console.log(error));
     }
+
     renderPlaylist() {
         this.songs.forEach((song, index) => {
           const songElement = document.createElement('div');
@@ -32,23 +34,36 @@ export class PlaylistComponent extends HTMLElement {
           songElement.addEventListener('click', () => this.changeSong(index));
       
           this.playlistContainer.appendChild(songElement);
+          this.getCurrentSong();
         });
+    }
+
+    changeSong(index) {
+      // Remove the 'selected-song' class from all playlist items
+      const playlistItems = this.playlistContainer.getElementsByClassName('playlist-item');
+      for (const item of playlistItems) {
+        item.classList.remove('selected-song');
       }
-      changeSong(index) {
-        // Remove the 'selected-song' class from all playlist items
-        const playlistItems = this.playlistContainer.getElementsByClassName('playlist-item');
-        for (const item of playlistItems) {
-          item.classList.remove('selected-song');
-        }
+    
       
-        // Set the source of the audio element to the selected song
-        this.audio.src = `assets/songs/${this.songs[index].file}`;
-      
-        // Play the new song
-        this.audio.play();
-      
-        // Add the 'selected-song' class to the clicked playlist item
-        playlistItems[index].classList.add('selected-song');
-      }
+      // Set the source of the audio element to the selected song
+      this.audio = `assets/songs/${this.songs[index].file}`;
+      console.log("New audio : " + this.audio);
+      this.dispatchEvent(
+        new CustomEvent('changeSong', { detail: this.audio })
+      );
+    
+      // Add the 'selected-song' class to the clicked playlist item
+      playlistItems[index].classList.add('selected-song');
+      //this.setCurrentMusic(this.audio);
+    }
+
+    getCurrentSong() {
+      return this.audio;
+    }
+
+    getIndexOfCurrentSong() {
+      return this.songs.findIndex(song => song.file === this.audio);
+    }
 }
 customElements.define('playlist-component', PlaylistComponent);
