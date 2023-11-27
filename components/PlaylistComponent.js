@@ -45,6 +45,7 @@ export class PlaylistComponent extends HTMLElement {
         item.classList.remove('selected-song');
       }
     
+      
       // Set the source of the audio element to the selected song
       this.audio = `assets/songs/${this.songs[index].file}`;
       console.log("New audio : " + this.audio);
