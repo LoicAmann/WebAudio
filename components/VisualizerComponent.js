@@ -8,7 +8,7 @@ export class VisualizerComponent extends HTMLElement {
       <style>
         canvas {
           width: 100%;
-          height: 100%;
+          height: 40%;
         }
       </style>
       <canvas id="canvas"></canvas>
