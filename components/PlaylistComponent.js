@@ -7,10 +7,11 @@ export class PlaylistComponent extends HTMLElement {
         console.log("Current audio : " + this.audio);
 
         this.playlistContainer = document.createElement('div'); 
-    this.playlistContainer.classList.add('playlist-container');
+        this.playlistContainer.classList.add('playlist-container');
     
         this.appendChild(this.playlistContainer);
         this.fetchSongs();
+      
     } 
     
     fetchSongs(){
@@ -34,7 +35,9 @@ export class PlaylistComponent extends HTMLElement {
           songElement.addEventListener('click', () => this.changeSong(index));
       
           this.playlistContainer.appendChild(songElement);
-          this.getCurrentSong();
+          this.getCurrentSong(); 
+          console.log("Current audio from playlist: " + this.audio);
+
         });
     }
 
