@@ -36,6 +36,10 @@
   height: 8%;
 }
 
+#nextTrackBtn {
+  color: #1DB954;
+}
+
 audio {
   width: 100%;
   background-color: #121212; /* Couleur de fond du lecteur Spotify en mode sombre */
