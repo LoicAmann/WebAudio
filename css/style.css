@@ -1,0 +1,32 @@
+/* Add the following CSS styles to your stylesheet */
+
+.playlist-container {
+    background-color: #181818;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px auto;
+  }
+  
+  .playlist-item {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+  }
+  
+  .playlist-item:hover {
+    background-color: #282828;
+  }
+  
+  .selected-song {
+    background-color: #1db954; /* Spotify green */
+    color: #fff;
+  }
