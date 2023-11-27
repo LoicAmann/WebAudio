@@ -80,6 +80,12 @@ export class MyAudioPlayer extends HTMLElement {
     this.updatePlayPauseButtonStyle(true); // true pour lecture en cours
   }
 
+  setCurrentMusic(music) {
+    console.log("set current music : " + music);
+    this.player.src = music;
+    this.play();
+  }
+
   pause() {
     this.player.pause();
     this.updatePlayPauseButtonStyle(false); // true pour lecture en cours
