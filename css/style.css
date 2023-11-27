@@ -12,8 +12,28 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     width: 300px;
+    height : 300px;
+    overflow-y: auto;
     margin: 20px auto;
   }
+  /* Webkit browsers (Chrome, Safari) */
+.playlist-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.playlist-container::-webkit-scrollbar-thumb {
+  background-color: #282828;
+  transition: background-color 0.3s ease; 
+}
+
+.playlist-container::-webkit-scrollbar-thumb:hover,
+.playlist-container::-webkit-scrollbar-thumb:active {
+  background-color: #a0a0a0; /* Light gray when hovered or clicked */
+}
+
+.playlist-container::-webkit-scrollbar-track {
+  background-color: #121212;
+}
   
   .playlist-item {
     padding: 10px;
