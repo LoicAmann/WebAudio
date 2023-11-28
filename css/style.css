@@ -1,9 +1,40 @@
 body {
   background-color: black;
-}/* Add the following CSS styles to your stylesheet */
+}
 
 h1 {
   color: whitesmoke;
+}
+
+#secondLine {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  border: solid 1px #1db954;
+  padding: 2%;
+}
+
+#controllers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  border: solid 1px #1db954;
+  padding: 2%;
+}
+
+#playlist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  border: solid 1px #1db954;
 }
 
 .playlist-container {
@@ -11,8 +42,8 @@ h1 {
     color: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
-    height : 300px;
+    width: 90%;
+    height: 380px;
     overflow-y: auto;
     margin: 20px auto;
   }
@@ -36,6 +67,7 @@ h1 {
 }
   
   .playlist-item {
+    font-size: 1.5rem;
     padding: 10px;
     margin: 5px;
     cursor: pointer;

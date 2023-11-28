@@ -8,10 +8,15 @@ function init() {
   playlist = document.querySelector("#playlist");
   visualizer = document.querySelector("visualizer-component");
 
-  playlist.addEventListener("changeSong", (event) => {
-    console.log("changeSong event received");
-    console.log(event.detail);
-    player.setCurrentMusic(event.detail);
-    visualizer.dispatchEvent(new CustomEvent('changeSong', { detail: event.detail }));
-  });
+    playlist.addEventListener('changeSong', (event) => {
+        console.log("changeSong event received");
+        console.log(event.detail);
+        player.setCurrentMusic(event.detail);
+        visualizer.dispatchEvent(new CustomEvent('changeSong', { detail: event.detail }));
+
+        eq = document.querySelector('#equalizer');
+        eq.setContext(player.getContext());
+
+        player.connect(eq.inputNode, eq.outputNode);
+    });
 }
