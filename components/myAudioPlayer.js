@@ -37,6 +37,9 @@ export class MyAudioPlayer extends HTMLElement {
       </div>
     `;
     console.log('MyAudioPlayer constructor');
+
+    // Code fourni par le professeur
+    this.ctx = new AudioContext();
   }
 
   static get observedAttributes() {
@@ -63,6 +66,9 @@ export class MyAudioPlayer extends HTMLElement {
   connectedCallback() {
     this.defineListeners();
     console.log("connected callback");
+    
+    // Code fourni par le professeur
+    this.buildAudioGraph();
   }
 
   loadAudio() {
@@ -115,6 +121,30 @@ export class MyAudioPlayer extends HTMLElement {
 
   forward() {
     this.player.currentTime += 5;
+  }
+
+  /**
+   * Code fourni par le professeur
+   */
+  buildAudioGraph() {
+    this.source = this.ctx.createMediaElementSource(this.player);
+    this.pannerNode = this.ctx.createPanner();
+
+    this.source.connect(this.pannerNode);
+    this.pannerNode.connect(this.ctx.destination);
+
+    this.lastNode = this.pannerNode;
+  }
+
+  /**
+   * Code fourni par le professeur
+   */
+  connect(inputNode, outputNode) {
+    // ex: inputNode est le premier d'une equalizer
+    // et outputNode est le dernier d'un equalizer
+    this.lastNode.connect(inputNode);
+    outputNode.connect(this.ctx.destination);
+    
   }
   
 }

@@ -10,6 +10,11 @@ function init() {
         console.log("changeSong event received");
         console.log(event.detail);
         player.setCurrentMusic(event.detail);
+
+        eq = document.querySelector('#equalizer');
+        eq.setContext(player.getContext());
+
+        player.connect(eq.inputNode, eq.outputNode);
     });
 }
 
