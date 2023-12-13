@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Projet WebAudio</title>
+    <title>WebAudio</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta charset="UTF-8">
     <script type="module" src="librairies/webaudio-controls.js"></script>
@@ -9,15 +9,18 @@
     <script src="components/PlaylistComponent.js" type="module"></script>  
     <script src="components/myAudioControllers.js" type="module"></script>  
     <script type="module" src="components/VisualizerComponent.js"></script>
-    
 </head> 
     <body>
     <h1>Yfitops</h1>
     <div id="myComponents">
         <my-audio-player id="player" src="assets\songs\CleanGuitarRiff.mp3"></my-audio-player>
+        <div class="inputbutton">
+            <label for="fileInput" class="custom-file-label">Add a song !</label>
+            <input type="file" id="fileInput" onchange="uploadSong()">
+          </div>
         <div id="secondLine">
             <my-audio-controllers id="controllers"></my-audio-controllers>
-            <playlist-component id="playlist"></playlist-component>
+        <playlist-component id="playlist"></playlist-component>
             <visualizer-component id="visualizer-component"></visualizer-component>
         </div>
     </div>
