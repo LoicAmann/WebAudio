@@ -5,6 +5,41 @@ body {
 h1 {
   color: whitesmoke;
 }
+.inputbutton {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* File input styles */
+.custom-file-label {
+  background-color: #2ecc71;
+  color: #181818;
+  padding: 15px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: filter 0.3s ease; /* Add a smooth transition effect on filter property */
+}
+
+.custom-file-label:hover {
+  filter: brightness(90%); /* Darken the color by 10% when hovered */
+}
+
+input[type="file"] {
+  font-size: 200px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  margin-bottom: 10px;
+}
+
+
 
 #secondLine {
   display: grid;
@@ -89,4 +124,23 @@ h1 {
     color: #fff;
   }
   
-  
+  .playlist-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: transform 0.5s ease;
+}
+
+.selected-song .playlist-image {
+    animation: rotate 4s infinite linear;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
