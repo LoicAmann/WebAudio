@@ -27,8 +27,7 @@ export class MyEqualizer extends HTMLElement {
                 knobwidth=24
                 knobheight=24
                 ditchlength=100
-                tooltip="freq 60hz"
-                colors="#1DB954;#535f50;#ff0"
+                colors="#1DB954;#535f50;#535f50"
             ></webaudio-slider>
 
             <p>170hz</p>
@@ -44,8 +43,7 @@ export class MyEqualizer extends HTMLElement {
                 knobwidth=24
                 knobheight=24
                 ditchlength=100
-                tooltip="freq 170hz"
-                colors="#1DB954;#535f50;#ff0"
+                colors="#1DB954;#535f50;#535f50"
             ></webaudio-slider>
 
             <p>350hz</p>
@@ -56,13 +54,12 @@ export class MyEqualizer extends HTMLElement {
                 min=-30
                 max=30
                 step=0.1
-                basewidth=24
+                basewidth=240
                 baseheight=128
                 knobwidth=24
                 knobheight=24
                 ditchlength=100
-                tooltip="freq 350hz"
-                colors="#1DB954;#535f50;#ff0"
+                colors="#1DB954;#535f50;#535f50"
             ></webaudio-slider>
 
             <p>1000hz</p>
@@ -79,7 +76,7 @@ export class MyEqualizer extends HTMLElement {
                 knobheight=24
                 ditchlength=100
                 tooltip="freq 1000hz"
-                colors="#1DB954;#535f50;#ff0"
+                colors="#1DB954;#535f50;#535f50"
             ></webaudio-slider>
 
             <p>3500hz</p>
@@ -95,8 +92,7 @@ export class MyEqualizer extends HTMLElement {
                 knobwidth=24
                 knobheight=24
                 ditchlength=100
-                tooltip="freq 3500hz"   
-                colors="#1DB954;#535f50;#ff0"
+                colors="#1DB954;#535f50;#535f50"
             ></webaudio-slider>
 
             <p>10000hz</p>
@@ -112,8 +108,7 @@ export class MyEqualizer extends HTMLElement {
                 knobwidth=24
                 knobheight=24
                 ditchlength=100
-                tooltip="freq 10000hz"
-                colors="#1DB954;#535f50;#ff0"
+                colors="#1DB954;#535f50;#535f50"
             ></webaudio-slider>
         `;
         console.log('MyEqualizer constructor');
