@@ -38,6 +38,7 @@ export class VisualizerComponent extends HTMLElement {
   
     if (sharedAudioContext.state !== 'closed') {
       // Check if the audio element is already connected
+      console.log(playerAudioElement._sourceNode);
       if (!playerAudioElement._sourceNode) {
         playerAudioElement._sourceNode = sharedAudioContext.createMediaElementSource(playerAudioElement);
       }
