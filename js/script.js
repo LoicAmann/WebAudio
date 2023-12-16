@@ -1,24 +1,26 @@
 window.onload = init;
 
-let player, playlist, visualizer, eq, echo;
+let playerComponent, player, playlist, controllers, visualizer, echo;
 
 function init() {
     console.log("page chargée");
-    player = document.querySelector("#player");
+    playerComponent = document.querySelector("my-audio-player");
+    console.log(playerComponent);
     playlist = document.querySelector("#playlist");
-    visualizer = document.querySelector("visualizer-component");
-    eq = document.querySelector('#equalizer');
-    echo = document.querySelector('#echo');
+    controllers = document.querySelector("#controllers");
+    visualizer = document.querySelector("#visualizer-component");
 
+    controllers.addEventListener('adjustVolume', (event) => {
+        console.log("adjustVolume event received");
+        console.log(event.detail);
+        playerComponent.setVolume(event.detail);
+    });
+    
     playlist.addEventListener('changeSong', (event) => {
         console.log("changeSong event received");
         console.log(event.detail);
-        player.setCurrentMusic(event.detail);
+        playerComponent.setCurrentMusic(event.detail);
         visualizer.dispatchEvent(new CustomEvent('changeSong', { detail: event.detail }));
-
-        eq.setContext(player.getContext());
-
-        player.connect(eq.inputNode, eq.outputNode);
     });
 }
 
