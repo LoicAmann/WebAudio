@@ -65,7 +65,7 @@ export class MyAudioPlayer extends HTMLElement {
 
   connectedCallback() {
     this.defineListeners();
-    console.log("connected callback");
+    console.log("connected callback player");
     
     // Code fourni par le professeur
     this.buildAudioGraph();
@@ -90,6 +90,11 @@ export class MyAudioPlayer extends HTMLElement {
     console.log("set current music : " + music);
     this.player.src = music;
     this.play();
+  }
+
+  setVolume(value) {
+    console.log("set volume : " + value);
+    this.player.volume = value;
   }
 
   pause() {

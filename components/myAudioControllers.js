@@ -16,11 +16,11 @@ export class MyAudioControllers extends HTMLElement {
         <div id="audio-controllers">
             <div id="div-equ">
                 <p>Equalizer</p>
-                <my-equ id="equalizer"></my-equ>
-            </div>
+
+                </div>
             <div id="div-vol"> 
                 <p>Volume</p>
-                <webaudio-knob id="volume" min="0" max="1" step="0.1" value="1" colors="#1DB954;#535f50;#535f50">
+                <webaudio-knob id="volume" min="0" max="1" step="0.1" value="0.5" colors="#1DB954;#535f50;#535f50">
                 </webaudio-knob>
             </div>
             <div id="div-bal">
@@ -53,19 +53,25 @@ export class MyAudioControllers extends HTMLElement {
     defineListeners() {
         this.equalizer = this.shadowRoot.querySelector('#equalizer');
         this.player = document.querySelector("#player");
-        this.volumeRange = this.shadowRoot.querySelector('#volume');
+        this.volume = this.shadowRoot.querySelector('#volume');
 
-        this.equalizer.addEventListener('input', () => this.changeFreq());
-        this.volumeRange.addEventListener('input', () => this.adjustVolume());
+        this.volume.addEventListener('input', () => this.adjustVolume());
     }
 
-    callback() {
+    connectedCallback() {
         this.defineListeners();
-        console.log("connected callback");
+        console.log("connected callback connectors");
     }
 
     adjustVolume() {
-        this.player.volume = this.volumeRange.value;
+        this.dispatchEvent(
+            new CustomEvent('adjustVolume', { detail: this.volume.value })
+          );
+    }
+
+    getVolume() {
+        console.log("Controller Volume value get : " + this.volume.value);
+        return this.volume.value;
     }
 
     createEcho(audioContext, source) {

@@ -11,7 +11,7 @@ h1 {
   grid-template-columns: 1fr 1fr;
 }
 
-#player {
+#player-component {
   display: flex;
   justify-content: space-between;
   align-items: center;
