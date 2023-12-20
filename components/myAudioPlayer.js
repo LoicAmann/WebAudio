@@ -69,6 +69,7 @@ export class MyAudioPlayer extends HTMLElement {
     
     // Code fourni par le professeur
     this.buildAudioGraph();
+    this.player.play();
   }
 
   loadAudio() {
@@ -90,6 +91,11 @@ export class MyAudioPlayer extends HTMLElement {
     console.log("set current music : " + music);
     this.player.src = music;
     this.play();
+  }
+
+  setVolume(value) {
+    console.log("set volume : " + value);
+    this.player.volume = value;
   }
 
   pause() {

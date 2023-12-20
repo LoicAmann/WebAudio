@@ -13,7 +13,7 @@
     <body>
     <h1>Yfitops</h1>
     <div id="myComponents">
-        <my-audio-player id="player" src="assets\songs\CleanGuitarRiff.mp3"></my-audio-player>
+        <my-audio-player id="playerComponent" src="assets\songs\CleanGuitarRiff.mp3"></my-audio-player>
         <div class="inputbutton">
             <label for="fileInput" class="custom-file-label">Add a song !</label>
             <input type="file" id="fileInput" onchange="uploadSong()">
@@ -21,7 +21,6 @@
         <div id="secondLine">
             <my-audio-controllers id="controllers"></my-audio-controllers>
         <playlist-component id="playlist"></playlist-component>
-            <visualizer-component id="visualizer-component"></visualizer-component>
         </div>
     </div>
 
