@@ -56,9 +56,11 @@ export class MyAudioControllers extends HTMLElement {
         this.volume.addEventListener('input', () => this.adjustVolume());
     }
 
-    callback() {
+    connectedCallback() {
         this.defineListeners();
+
         console.log("connected callback controllers");
+
     }
 
     adjustVolume() {
@@ -75,18 +77,7 @@ export class MyAudioControllers extends HTMLElement {
     createEcho(audioContext, source) {
         const echoNode = audioContext.createDelay();
         echoNode.delayTime.value = 0.5; // Ajustez le délai selon vos besoins
-
-        // Connectez le nœud d'écho entre la source audio et la destination audio
-        source.connect(echoNode);
-        echoNode.connect(audioContext.destination);
-
-        return echoNode;
-      }
-
-    createEcho(audioContext, source) {
-        const echoNode = audioContext.createDelay();
-        echoNode.delayTime.value = 0.5; // Ajustez le délai selon vos besoins
-
+  
         // Connectez le nœud d'écho entre la source audio et la destination audio
         source.connect(echoNode);
         echoNode.connect(audioContext.destination);

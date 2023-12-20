@@ -65,7 +65,7 @@ export class MyAudioPlayer extends HTMLElement {
 
   connectedCallback() {
     this.defineListeners();
-    console.log("connected callback");
+    console.log("connected callback player");
     
     // Code fourni par le professeur
     this.buildAudioGraph();
