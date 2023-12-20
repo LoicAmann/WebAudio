@@ -46,7 +46,7 @@ input[type="file"] {
   grid-template-columns: 1fr 1fr;
 }
 
-#player-component {
+#playerComponent {  
   display: flex;
   justify-content: space-between;
   align-items: center;

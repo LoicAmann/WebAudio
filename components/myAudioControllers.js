@@ -11,16 +11,14 @@ export class MyAudioControllers extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-        <link rel="stylesheet" type="text/css" href="css/myAudioControllers.css">
-
+            <link rel="stylesheet" type="text/css" href="css/myAudioControllers.css">
         <div id="audio-controllers">
             <div id="div-equ">
                 <p>Equalizer</p>
-
-                </div>
+            </div>
             <div id="div-vol"> 
                 <p>Volume</p>
-                <webaudio-knob id="volume" min="0" max="1" step="0.1" value="0.5" colors="#1DB954;#535f50;#535f50">
+                <webaudio-knob id="volume" min="0" max="1" step="0.1" value="1" colors="#1DB954;#535f50;#535f50">
                 </webaudio-knob>
             </div>
             <div id="div-bal">
@@ -60,7 +58,9 @@ export class MyAudioControllers extends HTMLElement {
 
     connectedCallback() {
         this.defineListeners();
-        console.log("connected callback connectors");
+
+        console.log("connected callback controllers");
+
     }
 
     adjustVolume() {
@@ -81,7 +81,7 @@ export class MyAudioControllers extends HTMLElement {
         // Connectez le nœud d'écho entre la source audio et la destination audio
         source.connect(echoNode);
         echoNode.connect(audioContext.destination);
-  
+
         return echoNode;
       }
 

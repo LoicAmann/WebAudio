@@ -69,6 +69,7 @@ export class MyAudioPlayer extends HTMLElement {
     
     // Code fourni par le professeur
     this.buildAudioGraph();
+    this.player.play();
   }
 
   loadAudio() {
