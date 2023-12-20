@@ -9,16 +9,30 @@ function init() {
     playlist = document.querySelector("#playlist");
     controllers = document.querySelector("#controllers");
 
+    //Volume
     controllers.addEventListener('adjustVolume', (event) => {
         console.log("adjustVolume event received");
         console.log(event.detail);
         playerComponent.setVolume(event.detail);
     });
 
+    //Playlist
     playlist.addEventListener('changeSong', (event) => {
         console.log("changeSong event received");
         console.log(event.detail);
         playerComponent.setCurrentMusic(event.detail);
+    });
+
+    //Echo
+    controllers.addEventListener('activateEcho', (event) => {
+        console.log("createEcho event received");
+        console.log(event.detail);
+        playerComponent.activateEcho(event.detail);
+    });
+    controllers.addEventListener('deactivateEcho', (event) => {
+        console.log("createEcho event received");
+        console.log(event.detail);
+        playerComponent.deactivateEcho(event.detail);
     });
 }
 
