@@ -52,8 +52,23 @@ export class MyAudioControllers extends HTMLElement {
         this.equalizer = this.shadowRoot.querySelector('#equalizer');
         this.player = document.querySelector("#player");
         this.volume = this.shadowRoot.querySelector('#volume');
+        this.echo = this.shadowRoot.querySelector('#echo');
 
         this.volume.addEventListener('input', () => this.adjustVolume());
+        this.echo.addEventListener('change', (event) => {
+            const isEchoEnabled = this.echo.value; // Vérifiez si le bouton est activé ou désactivé
+          
+            // En fonction de l'état du bouton, activez ou désactivez l'écho
+            if (isEchoEnabled) {
+              // Activer l'écho
+              // Appeler une fonction ou émettre un événement pour activer l'écho
+              this.activateEcho();
+            } else {
+              // Désactiver l'écho
+              // Appeler une fonction ou émettre un événement pour désactiver l'écho
+              this.deactivateEcho();
+            }
+          });
     }
 
     connectedCallback() {
@@ -61,6 +76,18 @@ export class MyAudioControllers extends HTMLElement {
 
         console.log("connected callback controllers");
 
+    }
+
+    activateEcho() {
+        this.dispatchEvent(
+            new CustomEvent('activateEcho', { detail: this.echo.value })
+          );
+    }
+
+    deactivateEcho() {
+        this.dispatchEvent(
+            new CustomEvent('deactivateEcho', { detail: this.echo.value })
+          );
     }
 
     adjustVolume() {
@@ -74,16 +101,7 @@ export class MyAudioControllers extends HTMLElement {
         return this.volume.value;
     }
 
-    createEcho(audioContext, source) {
-        const echoNode = audioContext.createDelay();
-        echoNode.delayTime.value = 0.5; // Ajustez le délai selon vos besoins
-  
-        // Connectez le nœud d'écho entre la source audio et la destination audio
-        source.connect(echoNode);
-        echoNode.connect(audioContext.destination);
-
-        return echoNode;
-      }
+    
 
 }
 customElements.define('my-audio-controllers', MyAudioControllers);

@@ -4,6 +4,8 @@
  * @description Custom element pour un lecteur audio
  */
 
+let delayNode;
+
 export class MyAudioPlayer extends HTMLElement {
   constructor() {
     super();
@@ -48,6 +50,7 @@ export class MyAudioPlayer extends HTMLElement {
 
   defineListeners() {
     this.player = this.shadowRoot.querySelector('#player');
+    this.player._sourceNode = this.ctx.createMediaElementSource(this.player);
     this.playBtn = this.shadowRoot.querySelector('#playBtn');
     this.pauseBtn = this.shadowRoot.querySelector('#pauseBtn');
     this.rewindBtn = this.shadowRoot.querySelector('#rewindBtn');
@@ -87,6 +90,12 @@ export class MyAudioPlayer extends HTMLElement {
     this.updatePlayPauseButtonStyle(true); // true pour lecture en cours
   }
 
+  pause() {
+    this.player.pause();
+    this.updatePlayPauseButtonStyle(false); // true pour lecture en cours
+
+  }
+
   setCurrentMusic(music) {
     console.log("set current music : " + music);
     this.player.src = music;
@@ -98,10 +107,38 @@ export class MyAudioPlayer extends HTMLElement {
     this.player.volume = value;
   }
 
-  pause() {
-    this.player.pause();
-    this.updatePlayPauseButtonStyle(false); // true pour lecture en cours
-
+  activateEcho() {
+    // Vérifier si l'effet d'écho n'est pas déjà activé
+    if (!delayNode || delayNode === null) {
+      // Créer un nœud de retard (delay node) pour l'écho
+      delayNode = this.ctx.createDelay();
+      delayNode.delayTime.value = 0.5; // Délai de 0.5 seconde pour l'écho
+  
+      // Connecter le nœud de retard au contexte audio
+      delayNode.connect(this.ctx.destination);
+  
+      // Connecter le nœud de retard entre la source audio et le reste de la chaîne audio
+      this.player._sourceNode.connect(delayNode);
+      delayNode.connect(this.ctx.destination);
+    }
+    this.dispatchEvent(
+        new CustomEvent('activateEcho', { detail: this.delayNode })
+      );
+  }
+  
+  deactivateEcho() {
+      // Vérifier si l'effet d'écho est activé
+      if (delayNode) {
+        // Déconnecter le nœud de retard
+        this.player._sourceNode.disconnect(delayNode);
+        delayNode.disconnect(this.ctx.destination);
+        
+        // Réinitialiser la variable du nœud de retard
+        delayNode = null;
+      }
+      this.dispatchEvent(
+          new CustomEvent('deactivateEcho', { detail: this.delayNode })
+        );
   }
 
   updatePlayPauseButtonStyle(isPlaying) {
@@ -133,7 +170,7 @@ export class MyAudioPlayer extends HTMLElement {
    * Code fourni par le professeur
    */
   buildAudioGraph() {
-    this.source = this.ctx.createMediaElementSource(this.player);
+    this.source = this.player._sourceNode;
     this.pannerNode = this.ctx.createPanner();
 
     this.source.connect(this.pannerNode);
