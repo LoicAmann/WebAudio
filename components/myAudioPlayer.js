@@ -37,6 +37,7 @@ export class MyAudioPlayer extends HTMLElement {
           <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8Zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5Z"/>
         </svg>
       </div>
+      <canvas id="visualization" width="400" height="100"></canvas>
     `;
     console.log('MyAudioPlayer constructor');
 
@@ -64,16 +65,58 @@ export class MyAudioPlayer extends HTMLElement {
     this.nextTrackBtn.addEventListener('click', () => this.nextTrack());
 
     //this.play(); //Play the audio when the page is loaded
+
+    
   }
 
   connectedCallback() {
     this.defineListeners();
-    console.log("connected callback player");
-    
+  
     // Code fourni par le professeur
     this.buildAudioGraph();
     this.player.play();
+  
+    // Initialize visualization canvas here after a delay
+    setTimeout(() => {
+      this.visualizationCanvas = this.shadowRoot.querySelector('#visualization');
+      this.visualizationContext = this.visualizationCanvas.getContext('2d');
+  
+      // Connect the analyzer to the source node
+      this.analyzer = this.ctx.createAnalyser();
+      this.player._sourceNode.connect(this.analyzer);
+  
+      // Set up the visualization
+      this.analyzer.fftSize = 256; // You can adjust this value based on your needs
+      const bufferLength = this.analyzer.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+  
+      // Draw the visualization on the canvas
+      const drawVisualization = () => {
+        this.analyzer.getByteFrequencyData(dataArray);
+  
+        this.visualizationContext.clearRect(0, 0, this.visualizationCanvas.width, this.visualizationCanvas.height);
+  
+        const barWidth = (this.visualizationCanvas.width / bufferLength) * 2.5;
+        let x = 0;
+  
+        for (let i = 0; i < bufferLength; i++) {
+          const barHeight = dataArray[i] / 2;
+  
+          this.visualizationContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+          this.visualizationContext.fillRect(x, this.visualizationCanvas.height - barHeight, barWidth, barHeight);
+  
+          x += barWidth + 1;
+        }
+  
+        requestAnimationFrame(drawVisualization);
+      };
+  
+      // Start the visualization loop
+      drawVisualization();
+    }, 0);
   }
+  
+  
 
   loadAudio() {
     this.player = this.shadowRoot.querySelector('#player');

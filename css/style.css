@@ -4,6 +4,14 @@ body {
 
 h1 {
   color: whitesmoke;
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  border: solid 1px #1db954;
+  padding: 2%;
 }
 .inputbutton {
   position: relative;
