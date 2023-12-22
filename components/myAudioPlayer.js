@@ -4,7 +4,7 @@
  * @description Custom element pour un lecteur audio
  */
 
-let delayNode;
+let delayNode, peakingFilter;
 
 export class MyAudioPlayer extends HTMLElement {
   constructor() {
@@ -103,7 +103,8 @@ export class MyAudioPlayer extends HTMLElement {
   }
 
   setVolume(value) {
-    console.log("set volume : " + value);
+    // Régler le volume du lecteur audio
+    // La valeur de volume doit être entre 0 et 1
     this.player.volume = value;
   }
 
@@ -139,6 +140,36 @@ export class MyAudioPlayer extends HTMLElement {
       this.dispatchEvent(
           new CustomEvent('deactivateEcho', { detail: this.delayNode })
         );
+  }
+
+  setBalance(value) {
+    if(peakingFilter!=null) {
+      // Déconnecter si l'effet existe déjà
+      this.player._sourceNode.disconnect(peakingFilter);
+      peakingFilter.disconnect(this.ctx.destination);
+      peakingFilter = null
+    }
+
+    peakingFilter = this.ctx.createBiquadFilter();
+    peakingFilter.type = 'peaking';
+    
+    // Paramètres initiaux
+    const initialFrequency = value; // Fréquence centrale initiale (1 kHz)
+    const initialQ = 1; // Facteur de qualité initiale
+    const initialGain = 0; // Gain initial en dB
+
+    peakingFilter.frequency.value = initialFrequency;
+    peakingFilter.Q.value = initialQ;
+    peakingFilter.gain.value = initialGain;
+
+    
+    // Connecter le filtre à la source audio et à la destination
+    this.player._sourceNode.connect(peakingFilter);
+    peakingFilter.connect(this.ctx.destination);
+   
+    // Ajuster la fréquence du filtre
+    peakingFilter.frequency.value = initialFrequency;
+
   }
 
   updatePlayPauseButtonStyle(isPlaying) {
