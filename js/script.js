@@ -12,27 +12,33 @@ function init() {
     //Volume
     controllers.addEventListener('adjustVolume', (event) => {
         console.log("adjustVolume event received");
-        console.log(event.detail);
+        console.log("The volume is : " + parseInt(event.detail*10));
         playerComponent.setVolume(event.detail);
     });
 
     //Playlist
     playlist.addEventListener('changeSong', (event) => {
         console.log("changeSong event received");
-        console.log(event.detail);
         playerComponent.setCurrentMusic(event.detail);
     });
 
     //Echo
     controllers.addEventListener('activateEcho', (event) => {
         console.log("createEcho event received");
-        console.log(event.detail);
-        playerComponent.activateEcho(event.detail);
+        console.log("Activation : " + event.detail);
+        playerComponent.activateEcho();
     });
     controllers.addEventListener('deactivateEcho', (event) => {
         console.log("createEcho event received");
-        console.log(event.detail);
-        playerComponent.deactivateEcho(event.detail);
+        console.log("Deactivation : " + event.detail);
+        playerComponent.deactivateEcho();
+    });
+
+    //Balance
+    controllers.addEventListener('adjustBalance', (event) => {
+        console.log("adjustBalance event received");
+        console.log("Set balance value : " + event.detail*100);
+        playerComponent.setBalance(parseInt(event.detail*100));
     });
 }
 
