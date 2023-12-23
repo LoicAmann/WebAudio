@@ -4,7 +4,7 @@
  * @description Custom element pour un lecteur audio
  */
 
-let delayNode, peakingFilter;
+let delayNode, panNode, filtres = [], filter60Hz, filter170Hz, filter350Hz, filter1000Hz, filter3500Hz, filter10000Hz;
 
 export class MyAudioPlayer extends HTMLElement {
   constructor() {
@@ -65,16 +65,13 @@ export class MyAudioPlayer extends HTMLElement {
     this.nextTrackBtn.addEventListener('click', () => this.nextTrack());
 
     //this.play(); //Play the audio when the page is loaded
-
     
   }
 
   connectedCallback() {
     this.defineListeners();
-  
     // Code fourni par le professeur
     this.buildAudioGraph();
-    this.player.play();
   
     // Initialize visualization canvas here after a delay
     setTimeout(() => {
@@ -114,9 +111,7 @@ export class MyAudioPlayer extends HTMLElement {
       // Start the visualization loop
       drawVisualization();
     }, 0);
-  }
-  
-  
+  }  
 
   loadAudio() {
     this.player = this.shadowRoot.querySelector('#player');
@@ -185,33 +180,20 @@ export class MyAudioPlayer extends HTMLElement {
         );
   }
 
-  setBalance(value) {
-    if(peakingFilter!=null) {
-      // Déconnecter si l'effet existe déjà
-      this.player._sourceNode.disconnect(peakingFilter);
-      peakingFilter.disconnect(this.ctx.destination);
-      peakingFilter = null
+  setStereo(value) {
+    if(panNode!=null){
+      panNode.disconnect(this.ctx.destination)
     }
 
-    peakingFilter = this.ctx.createBiquadFilter();
-    peakingFilter.type = 'peaking';
-    
-    // Paramètres initiaux
-    const initialFrequency = value; // Fréquence centrale initiale (1 kHz)
-    const initialQ = 1; // Facteur de qualité initiale
-    const initialGain = 0; // Gain initial en dB
+    panNode = this.ctx.createStereoPanner();
 
-    peakingFilter.frequency.value = initialFrequency;
-    peakingFilter.Q.value = initialQ;
-    peakingFilter.gain.value = initialGain;
+    // Définir la valeur de panoramique (de -1 à 1)
+    // -1 pour tout à gauche, 0 pour au centre, 1 pour tout à droite
+    panNode.pan.value = value; // Ajustez la valeur selon vos besoins
 
-    
-    // Connecter le filtre à la source audio et à la destination
-    this.player._sourceNode.connect(peakingFilter);
-    peakingFilter.connect(this.ctx.destination);
-   
-    // Ajuster la fréquence du filtre
-    peakingFilter.frequency.value = initialFrequency;
+    // Connecter la source au nœud de panoramique, puis au contexte de destination
+    this.player._sourceNode.connect(panNode);
+    panNode.connect(this.ctx.destination);
 
   }
 
@@ -239,6 +221,153 @@ export class MyAudioPlayer extends HTMLElement {
   forward() {
     this.player.currentTime += 5;
   }
+
+  clearEqualizer() {
+    filtres.forEach(filter => {
+      // Déconnectez le filtre
+      filter.disconnect();
+    });
+    console.log("clear equalizer");
+  }
+
+  setFiltre1(value) {
+    if(filter60Hz!=null){
+      filter60Hz.disconnect(this.ctx.destination)
+    }
+    filter60Hz = this.ctx.createBiquadFilter();
+    filter60Hz.type = 'peaking'; // Type de filtre peaking
+    filter60Hz.frequency.value = 60; // Fréquence cible en Hz
+    filter60Hz.Q.value = 1; // Facteur de qualité (ajustez selon vos besoins)
+    filter60Hz.gain.value = 0; // Gain (ajustez selon vos besoins)
+
+    filter60Hz.gain.value = value;
+
+    // Connecter la source au filtre 60 Hz, puis au contexte de destination
+    this.player._sourceNode.connect(filter60Hz);
+    filter60Hz.connect(this.ctx.destination);
+
+    
+    console.log("set filtre 1");
+    console.log("gain : " + filter60Hz.gain.value);
+    console.log("frequency : " + filter60Hz.frequency.value);
+  }
+
+  setFiltre2(value) {
+    if(filter170Hz!=null){
+      filter170Hz.disconnect(this.ctx.destination)
+    }
+    filter170Hz = this.ctx.createBiquadFilter();
+    filter170Hz.type = 'peaking'; // Type de filtre peaking
+    filter170Hz.frequency.value = 170; // Fréquence cible en Hz
+    filter170Hz.Q.value = 1; // Facteur de qualité (ajustez selon vos besoins)
+    filter170Hz.gain.value = 0; // Gain (ajustez selon vos besoins)
+
+    filter170Hz.gain.value = value;
+
+    filtres.push(filter170Hz);
+
+    // Connecter la source au filtre 170 Hz, puis au contexte de destination
+    this.player._sourceNode.connect(filter170Hz);
+    filter170Hz.connect(this.ctx.destination);
+
+    console.log("set filtre 2");
+    console.log("gain : " + filter170Hz.gain.value);
+    console.log("frequency : " + filter170Hz.frequency.value);
+  }
+
+  setFiltre3(value) {
+    if(filter350Hz!=null){
+      filter350Hz.disconnect(this.ctx.destination)
+    }
+    filter350Hz = this.ctx.createBiquadFilter();
+    filter350Hz.type = 'peaking'; // Type de filtre peaking
+    filter350Hz.frequency.value = 350; // Fréquence cible en Hz
+    filter350Hz.Q.value = 1; // Facteur de qualité (ajustez selon vos besoins)
+    filter350Hz.gain.value = 0; // Gain (ajustez selon vos besoins)
+
+    filter350Hz.gain.value = value;
+
+    filtres.push(filter350Hz);
+
+    // Connecter la source au filtre 350 Hz, puis au contexte de destination
+    this.player._sourceNode.connect(filter350Hz);
+    filter350Hz.connect(this.ctx.destination);
+
+    console.log("set filtre 3");
+    console.log("gain : " + filter350Hz.gain.value);
+    console.log("frequency : " + filter350Hz.frequency.value);
+  }
+
+  setFiltre4(value) {
+    if(filter1000Hz!=null){
+      filter1000Hz.disconnect(this.ctx.destination)
+    }
+    filter1000Hz = this.ctx.createBiquadFilter();
+    filter1000Hz.type = 'peaking'; // Type de filtre peaking
+    filter1000Hz.frequency.value = 1000; // Fréquence cible en Hz
+    filter1000Hz.Q.value = 1; // Facteur de qualité (ajustez selon vos besoins)
+    filter1000Hz.gain.value = 0; // Gain (ajustez selon vos besoins)
+
+    filter1000Hz.gain.value = value;
+
+    filtres.push(filter1000Hz);
+
+    // Connecter la source au filtre 1000 Hz, puis au contexte de destination
+    this.player._sourceNode.connect(filter1000Hz);
+    filter1000Hz.connect(this.ctx.destination);
+
+    console.log("set filtre 4");
+    console.log("gain : " + filter1000Hz.gain.value);
+    console.log("frequency : " + filter1000Hz.frequency.value);
+  }
+
+  setFiltre5(value) {
+    if(filter3500Hz!=null){
+      filter3500Hz.disconnect(this.ctx.destination)
+    }
+    filter3500Hz = this.ctx.createBiquadFilter();
+    filter3500Hz.type = 'peaking'; // Type de filtre peaking
+    filter3500Hz.frequency.value = 3500; // Fréquence cible en Hz
+    filter3500Hz.Q.value = 1; // Facteur de qualité (ajustez selon vos besoins)
+    filter3500Hz.gain.value = 0; // Gain (ajustez selon vos besoins)
+
+    filter3500Hz.gain.value = value;
+
+    filtres.push(filter3500Hz);
+
+    // Connecter la source au filtre 3500 Hz, puis au contexte de destination
+    this.player._sourceNode.connect(filter3500Hz);
+    filter3500Hz.connect(this.ctx.destination);
+
+    console.log("set filtre 5");
+    console.log("gain : " + filter3500Hz.gain.value);
+    console.log("frequency : " + filter3500Hz.frequency.value);
+  }
+
+  setFiltre6(value) {
+    if(filter10000Hz!=null){
+      filter10000Hz.disconnect(this.ctx.destination)
+    }
+    filter10000Hz = this.ctx.createBiquadFilter();
+    filter10000Hz.type = 'peaking'; // Type de filtre peaking
+    filter10000Hz.frequency.value = 10000; // Fréquence cible en Hz
+    filter10000Hz.Q.value = 1; // Facteur de qualité (ajustez selon vos besoins)
+    filter10000Hz.gain.value = 0; // Gain (ajustez selon vos besoins)
+
+    filter10000Hz.gain.value = value;
+
+    filtres.push(filter10000Hz);
+
+    // Connecter la source au filtre 10000 Hz, puis au contexte de destination
+    this.player._sourceNode.connect(filter10000Hz);
+    filter10000Hz.connect(this.ctx.destination);
+
+    console.log("set filtre 6");
+    console.log("gain : " + filter10000Hz.gain.value);
+    console.log("frequency : " + filter10000Hz.frequency.value);
+  }
+
+
 
   /**
    * Code fourni par le professeur

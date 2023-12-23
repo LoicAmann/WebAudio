@@ -12,44 +12,47 @@ export class MyAudioControllers extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <link rel="stylesheet" type="text/css" href="css/myAudioControllers.css">
-        <div id="audio-controllers">
-            <div id="div-equ">
-                <h2>Equalizer</2>
-            </div>
-            <div id="div-vol" style="display: flex; flex-direction: column; align-items: center; text-align: center;"> 
-                <h2>Volume</h2>
-                <p id="volumeValue">10<p>
-                <webaudio-knob id="volume" min="0" max="1" step="0.1" value="1" colors="#1DB954;#535f50;#535f50">
-                </webaudio-knob>
-            </div>
-            <div id="div-bal" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                <h2>Balance</h2>
-                <div style="display: grid;
-                grid-template-columns: 1fr 1fr;">
-                    <webaudio-slider
-                        style="margin-right: 20px;"
-                        id="balance"
-                        value=0
-                        min=0
-                        max=24
-                        step=0.1
-                        basewidth=24
-                        baseheight=128
-                        knobwidth=24
-                        knobheight=24
-                        ditchlength=100
-                        colors="#1DB954;#535f50;#535f50"
-                    ></webaudio-slider>
-                    <p style="font-size=;">< Aigue</p>
+            <div id="audio-controllers"> 
+                <div id="div-equ">
+                    <h2>Equalizer</2>
+                    <my-equ id="equalizer"></my-equ>
                 </div>
-                <h2>Echo</h2>
-                <webaudio-switch
-                    id="echo"
-                    colors="#1DB954;#535f50;#535f50"
-                ></webaudio-switch>
+                <div id="first-column-controllers" style="background-color: #f5f5f500;" border: none;>
+                    <div id="div-vol" style="display: flex; flex-direction: column; align-items: center; text-align: center;"> 
+                        <h2>Volume</h2>
+                        <p id="volumeValue">10<p>
+                        <webaudio-knob id="volume" min="0" max="1" step="0.1" value="1" colors="#1DB954;#535f50;#535f50">
+                        </webaudio-knob>
+                    </div>
+                    <div id="div-str" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <h2>Stéréo</h2>
+                        <div style="display: grid;
+                        grid-template-columns: 1fr 1fr; border: none; background-color: #f5f5f500;">
+                            <p style="font-size=0.5em;">Gauche</p>
+                            <p style="font-size=0.5em;">Droite</p>
+                        </div>
+                        <webaudio-slider
+                                style="margin-right: 20px;"
+                                id="stereo"
+                                value=0
+                                min=-1
+                                max=1
+                                step=0.1
+                                basewidth=24
+                                baseheight=128
+                                knobwidth=24
+                                knobheight=24
+                                ditchlength=100
+                                colors="#1DB954;#535f50;#535f50"
+                            ></webaudio-slider>
+                        <h2>Echo</h2>
+                        <webaudio-switch
+                            id="echo"
+                            colors="#1DB954;#535f50;#535f50"
+                        ></webaudio-switch>
+                    </div>
+                </div>
             </div>
-                
-        </div>
         `;  
         console.log('My audio controller constructor');
     }
@@ -59,7 +62,7 @@ export class MyAudioControllers extends HTMLElement {
         this.player = document.querySelector("#player");
         this.volume = this.shadowRoot.querySelector('#volume');
         this.volumeValue = this.shadowRoot.querySelector('#volumeValue');
-        this.balance = this.shadowRoot.querySelector('#balance');
+        this.stereo = this.shadowRoot.querySelector('#stereo');
         this.echo = this.shadowRoot.querySelector('#echo');
 
         this.volume.addEventListener('input', () => this.adjustVolume());
@@ -77,7 +80,7 @@ export class MyAudioControllers extends HTMLElement {
               this.deactivateEcho();
             }
           });
-          this.balance.addEventListener('input', () => this.adjustBalance());
+          this.stereo.addEventListener('input', () => this.adjustStereo());
     }
 
     connectedCallback() {
@@ -106,9 +109,9 @@ export class MyAudioControllers extends HTMLElement {
           );
     }
 
-    adjustBalance() {
+    adjustStereo() {
         this.dispatchEvent(
-            new CustomEvent('adjustBalance', { detail: this.balance.value *10 })
+            new CustomEvent('adjustStereo', { detail: this.stereo.value })
           );
     }
 
@@ -117,7 +120,9 @@ export class MyAudioControllers extends HTMLElement {
         return this.volume.value;
     }
 
-    
+    getEqualizerComponent() {
+        return this.equalizer;
+    }
 
 }
 customElements.define('my-audio-controllers', MyAudioControllers);
