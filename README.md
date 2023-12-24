@@ -1,4 +1,4 @@
-![image](https://github.com/LoicAmann/WebAudio/assets/70748202/c5b5d773-6c18-4e88-8850-f52dd683398b)# WebAudio
+# WebAudio
 
 This is a university project for M. Buffa's M2 MIAGE INTENSE course.
 
