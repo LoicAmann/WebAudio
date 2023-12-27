@@ -42,7 +42,7 @@ export class MyAudioPlayer extends HTMLElement {
     console.log('MyAudioPlayer constructor');
 
     // Code fourni par le professeur
-    this.ctx = new AudioContext();
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
   }
 
   static get observedAttributes() {
