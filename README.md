@@ -20,9 +20,13 @@ If you'd like to run the project locally, please follow these tips. This only ap
 
 # Fonctionnalités : 
 Nous mettons à disposition une playlist comprenant des chansons préétablies. Vous avez la possibilité d'ajouter un (ou plusieurs !) fichier audio à cette playlist en cliquant sur "Add a song !". De plus, il est possible d'interrompre, de faire avancer ou reculer la lecture de la chanson selon vos préférences.
+![image](https://github.com/LoicAmann/WebAudio/assets/77619552/f5cb04f2-d9c3-49c6-9fd2-706519475131)
+
 Visualisez le song produit : ![image](https://github.com/LoicAmann/WebAudio/assets/77619552/49629acb-1bfe-4774-8c42-9ce13ab65e8a)
 
-Au sein de la section Equalizer, vous avez la liberté de modifier le morceau en cours de lecture.
+Au sein de la section Equalizer, vous avez la liberté de modifier le morceau en cours de lecture. 
+![image](https://github.com/LoicAmann/WebAudio/assets/77619552/60953fbd-a860-4ebd-9038-853d69700618)
+
 # Développement et difficultés rencontrées : 
 Notre compréhension du développement des Web Components à l'aide de JavaScript, HTML et CSS s'est révélée relativement solide. Cependant, nous avons rencontré certaines difficultés lors de la manipulation des éléments de Web Audio et de la visualisation des chansons.
 
