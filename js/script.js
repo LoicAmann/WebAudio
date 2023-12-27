@@ -3,6 +3,7 @@ window.onload = init;
 let playerComponent, player, playlist, controllers, visualizer, equalizer;
 
 function init() {
+    document.addEventListener('click', () => { 
     console.log("page chargée");
     playerComponent = document.querySelector("my-audio-player");
     console.log("Player Component récupéré");
@@ -83,6 +84,8 @@ function init() {
         console.log("adjustFiltre6 event received");
         console.log("Set filtre6 value : " + event.detail);
         playerComponent.setFiltre6(parseInt(event.detail));
+    });
+
     });
 }
 
